@@ -27,10 +27,12 @@ class User(BaseModel):
     
     # Configuraciones
     rol = db.Column(db.String(20), nullable=False, default=UserRole.ASISTENTE.value)
+    fecha_creacion = db.Column(db.Date, default=db.func.current_date())
     activo = db.Column(db.Boolean, default=True, nullable=False)
     ultimo_acceso = db.Column(db.DateTime)
     
-    
+    movimientos = db.relationship('MovimientoInventario', back_populates='usuario', lazy='dynamic')
+
     __table_args__ = (
         CheckConstraint("rol IN ('Administrador', 'Veterinario', 'Asistente', 'Recepcionista')", 
                        name='check_rol'),
@@ -90,7 +92,7 @@ class User(BaseModel):
         """Verificar si el usuario tiene los permisos necesarios"""
         if isinstance(required_roles, str):
             required_roles = [required_roles]
-        return self.rol.value in required_roles
+        return self.rol in required_roles
     
     @classmethod
     def find_by_username(cls, username):

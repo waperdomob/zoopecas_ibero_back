@@ -85,20 +85,11 @@ def refresh():
         if not user or not user.activo:
             return jsonify({'message': 'Usuario no válido'}), 401
         
-        # Generar nuevo token de acceso
-        additional_claims = {
-            "rol": user.rol,
-            "nombre_completo": f"{user.nombre} {user.apellidos}"
-        }
-        
-        new_token = create_access_token(
-            identity=user.id,
-            additional_claims=additional_claims
-        )
+        tokens = user.generate_tokens()
         
         return jsonify({
             'message': 'Token renovado exitosamente',
-            'access_token': new_token
+            'access_token': tokens['access_token'] 
         }), 200
         
     except Exception as e:
