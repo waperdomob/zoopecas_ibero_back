@@ -126,6 +126,7 @@ class HistoriaClinica(BaseModel):
             if self.ultima_consulta:
                 data['ultima_consulta'] = self.ultima_consulta.to_dict()
         
+        data['mascota'] = self.mascota.to_dict() if self.mascota else None
         return data
     
     def __repr__(self):

@@ -35,7 +35,7 @@ class Cita(BaseModel):
     def id(self):
         return self.cita_id
     
-    def to_dict(self, include_relations=False):
+    def to_dict(self, include_relations=True):
         data = {
             'cita_id': self.cita_id,
             'cliente_id': self.cliente_id,
