@@ -254,7 +254,7 @@ class Consulta(BaseModel):
         return f'<Consulta {self.consulta_id} - {self.fecha_consulta}>'
 
 
-class SeguimientoPaciente(db.Model):
+class SeguimientoPaciente(BaseModel):
     __tablename__ = 'seguimiento_paciente'
     
     seguimiento_id = db.Column('seguimiento_id', db.Integer, primary_key=True)
